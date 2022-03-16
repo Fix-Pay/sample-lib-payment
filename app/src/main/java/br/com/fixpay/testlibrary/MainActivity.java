@@ -8,6 +8,7 @@ import android.widget.TextView;
 import java.util.UUID;
 
 import br.com.fixpay.fixpaysales.InputTransaction;
+import br.com.fixpay.fixpaysales.OutputTransaction;
 import br.com.fixpay.fixpaysales.transaction.MakeTransaction;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,8 +28,11 @@ public class MainActivity extends AppCompatActivity {
       input.setAmount(1.00);
 
       MakeTransaction makeTransaction = new MakeTransaction(getApplicationContext(), this);
-      makeTransaction.makeTransaction(input);
 
+      new Thread(() -> {
+        OutputTransaction outputTransaction = makeTransaction.makeTransaction(input);
+        System.out.println(outputTransaction);
+      }).start();
     });
   }
 }
